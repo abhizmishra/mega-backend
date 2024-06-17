@@ -54,10 +54,11 @@ const userSchema = new Schema(
 
 //To Encript the password before save to database
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+if (!this.isModified("password")) return next();
+//save: This is a Mongoose model method used to save a document to the database. When you create or update a document in MongoDB using Mongoose, you typically call the save method to persist the changes.
 
 // for checking during login is password correct or not
 
